@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  # app
+  app:
+    container_name: app
+    image: app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    networks:
+      - product-api-network
+
+  #MySQL Service
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: product_api
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysqldb
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - product-api-network
+
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - product-api-network
+
+#Docker Networks
+networks:
+  product-api-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
