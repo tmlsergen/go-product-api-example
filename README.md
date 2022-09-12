@@ -2,7 +2,7 @@
 
 ## Installation
 1. Clone Project
-> `git clone git@github.com:tmlsergen/simple_basket.git`
+> `git clone git@github.com:tmlsergen/go-product-api-example.git`
 2. Starting Docker Containers
 > `docker-compose up`
 3. You can see the working containers with `docker ps`
